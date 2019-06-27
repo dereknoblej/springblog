@@ -1,8 +1,24 @@
 package com.codeup.springblog;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Posts")
 public class Post {
+    @Id @GeneratedValue @Column(columnDefinition = "int(11) unsigned")
+    private int id;
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String body;
+
+    public Post() {
+    }
+    public Post(int id, String title, String body){
+        this.title = title;
+        this.body = body;
+        this.id = id;
+    }
 
     public Post(String title, String body){
         this.title = title;
@@ -23,5 +39,9 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public int getId() {
+        return id;
     }
 }

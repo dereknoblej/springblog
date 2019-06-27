@@ -12,8 +12,17 @@
 <p th:text="${body}"></p>
 
 <div th:each="post : ${postlist}">
+
     <ul>
         <li th:text="${post.title}"></li>
+        <form method="post">
+            <input type="hidden" name="id" th:attr="value=${post.id}" />
+            <button type="submit">Delete</button>
+        </form>
+        <form th:action="@{'/posts/' + ${post.id} + '/edit'}" th:method="POST">
+        <input type="hidden" name="idEdit" th:attr="value=${post.id}" />
+            <button type="submit">Edit</button>
+        </form>
     </ul>
 </div>
 
