@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostRepository postsDao;
+    private final UserRepository usersDao;
 
-    public PostController(PostRepository postsDao) {
+    public PostController(PostRepository postsDao, UserRepository usersDao) {
         this.postsDao = postsDao;
+        this.usersDao = usersDao;
     }
 
 
@@ -19,7 +21,7 @@ public class PostController {
     @GetMapping("/posts")
     public String posts(Model model){
 
-        model.addAttribute("postlist", postsDao.findAllByTitleContaining("t"));
+        model.addAttribute("postlist", postsDao.findAll());
 
         return "posts/index";
     }
@@ -57,14 +59,18 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
     public String create(){
-        return "view the form for creating posts";
+        return "posts/create";
     }
 
+
+
     @PostMapping("/posts/create")
-    @ResponseBody
-    public void createPost(){
+    public String  insert(@RequestParam String title, @RequestParam String body){
+        User author = usersDao.findOne(1);
+        Post newPost = new Post(title,body, author);
+        postsDao.save(newPost);
+        return "redirect:/posts";
 
     }
 

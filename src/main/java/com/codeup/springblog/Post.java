@@ -11,6 +11,8 @@ public class Post {
     private String title;
     @Column(nullable = false)
     private String body;
+    @ManyToOne
+    private User author;
 
     public Post() {
     }
@@ -18,6 +20,11 @@ public class Post {
         this.title = title;
         this.body = body;
         this.id = id;
+    }
+    public Post(String title, String body, User author){
+        this.title = title;
+        this.body = body;
+        this.author = author;
     }
 
     public Post(String title, String body){
