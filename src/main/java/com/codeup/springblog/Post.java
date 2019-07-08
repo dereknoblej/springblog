@@ -27,6 +27,13 @@ public class Post {
         this.author = author;
     }
 
+    public Post(int id, String title, String body, User author){
+        this.title = title;
+        this.body = body;
+        this.id = id;
+        this.author = author;
+    }
+
     public Post(String title, String body){
         this.title = title;
         this.body = body;
@@ -50,5 +57,17 @@ public class Post {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

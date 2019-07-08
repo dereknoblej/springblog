@@ -9,10 +9,10 @@
 
 <h1>Create Post</h1>
 
-<form action="/posts/create" method="post">
-    <input name="title" />
+<form th:action="@{/posts/create}" th:method="post" th:object="${post}">
+    <input type="text" th:field="*{title}" />
     <br />
-    <input type="textarea" name="body" />
+    <input type="text" th:field="*{body}" />
     <br />
     <input type="submit" />
 

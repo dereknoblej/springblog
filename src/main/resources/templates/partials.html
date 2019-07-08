@@ -11,6 +11,12 @@
         <li>Home</li>
         <li>About</li>
         <li>Contacts</li>
+        <!-- More links here... -->
+        <li>
+            <form th:action="@{/logout}" th:method="post">
+                <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+            </form>
+        </li>
     </ul>
 </nav>
 <header th:fragment="header">

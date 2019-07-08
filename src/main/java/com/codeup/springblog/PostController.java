@@ -1,5 +1,6 @@
 package com.codeup.springblog;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +11,12 @@ public class PostController {
 
     private final PostRepository postsDao;
     private final UserRepository usersDao;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postsDao, UserRepository usersDao) {
+    public PostController(PostRepository postsDao, UserRepository usersDao, EmailService emailService) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
+        this.emailService = emailService;
     }
 
 
@@ -25,12 +28,15 @@ public class PostController {
 
         return "posts/index";
     }
+
     @PostMapping("/posts")
-    private String deletePost(@RequestParam int id){
+    private String deletePost(@RequestParam(name="id") int id){
+        System.out.println(id);
         postsDao.delete(id);
-        return "redirect:posts";
+        return "redirect:/posts";
 
     }
+
 
 
     @GetMapping("/posts/{id}")
@@ -45,31 +51,32 @@ public class PostController {
     @GetMapping("/posts/{id}/edit")
     public String editPost(@PathVariable int id, Model model){
         Post post = postsDao.findOne(id);
-        model.addAttribute("title", post.getTitle());
-        model.addAttribute("body", post.getBody());
-        model.addAttribute("id",post.getId());
+        System.out.println(post.getAuthor());
+        model.addAttribute("post", post);
+
         return "posts/editPost";
     }
     @PostMapping("/posts/{id}/edit")
-    public String editPost(@PathVariable int id, @RequestParam String title, @RequestParam String body){
-
-        Post postToInsert = new Post(id, title,body);
-        postsDao.save(postToInsert);
-        return "redirect:posts";
+    public String editPost(@ModelAttribute Post post){
+        Post oldPost = postsDao.findOne(post.getId());
+        post.setAuthor(oldPost.getAuthor());
+        postsDao.save(post);
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts/create")
-    public String create(){
+    public String create(Model model){
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
 
 
     @PostMapping("/posts/create")
-    public String  insert(@RequestParam String title, @RequestParam String body){
-        User author = usersDao.findOne(1);
-        Post newPost = new Post(title,body, author);
-        postsDao.save(newPost);
+    public String  insert(@ModelAttribute Post post){
+       User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setAuthor(author);
+        postsDao.save(post);
         return "redirect:/posts";
 
     }

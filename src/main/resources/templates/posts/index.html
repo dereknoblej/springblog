@@ -15,12 +15,14 @@
 
     <ul>
         <li th:text="${post.title}"></li>
-        <form method="post">
-            <input type="hidden" name="id" th:attr="value=${post.id}" />
+        <li th:text="${post.body}"></li>
+        <li th:text="${post.author.username}"></li>
+        <form th:method="POST">
+            <input type="hidden" name="id" th:value="${post.id}" />
             <button type="submit">Delete</button>
         </form>
-        <form th:action="@{'/posts/' + ${post.id} + '/edit'}" th:method="POST">
-        <input type="hidden" name="idEdit" th:attr="value=${post.id}" />
+        <form th:action="@{'/posts/' + ${post.id} + '/edit'}" th:method="GET">
+        <input type="hidden" name="idEdit" th:value="${post.id}" />
             <button type="submit">Edit</button>
         </form>
     </ul>
