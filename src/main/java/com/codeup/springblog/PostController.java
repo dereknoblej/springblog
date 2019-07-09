@@ -3,7 +3,10 @@ package com.codeup.springblog;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -73,10 +76,17 @@ public class PostController {
 
 
     @PostMapping("/posts/create")
-    public String  insert(@ModelAttribute Post post){
+    public String  insert(@Valid Post post, Errors validation, Model model){
+        if(validation.hasErrors()){
+            model.addAttribute("errors", validation);
+            model.addAttribute("post", post);
+            return "/posts/create";
+        }
+
        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthor(author);
         postsDao.save(post);
+        emailService.prepareAndSend(post,post.getTitle(),post.getBody());
         return "redirect:/posts";
 
     }

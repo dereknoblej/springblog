@@ -12,12 +12,13 @@ public class EmailService {
     @Autowired
     public JavaMailSender emailSender;
 
-    @Value("@{spring.mail.from}")
+    @Value("${spring.mail.from}")
     private String from;
 
     public void prepareAndSend(Post post, String subject, String body){
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
+        System.out.println(post.getAuthor().getEmail());
         msg.setTo(post.getAuthor().getEmail());
         msg.setSubject(subject);
         msg.setText(body);

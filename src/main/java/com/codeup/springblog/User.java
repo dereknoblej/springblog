@@ -1,6 +1,8 @@
 package com.codeup.springblog;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,12 +13,14 @@ public class User {
     @Id @GeneratedValue @Column(columnDefinition = "int(11) unsigned")
     private int id;
 
+    @NotBlank(message = "Must have username")
     @Column(nullable = false)
     private String username;
 
+    @NotBlank(message = "Must have password")
     @Column(nullable = false)
     private String password;
-
+    @NotBlank(message = "Must have email")
     @Column(nullable = false)
     private String email;
 

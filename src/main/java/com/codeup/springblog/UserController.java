@@ -3,17 +3,20 @@ package com.codeup.springblog;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 @Controller
 public class UserController {
-    private Users users;
+    private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
 
-    public UserController(Users users, PasswordEncoder passwordEncoder) {
-        this.users = users;
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+        this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -24,10 +27,21 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public String saveUser(@ModelAttribute User user){
+    public String saveUser(@Valid User user, Errors validation, Model model){
+        System.out.println(user.getUsername());
+        System.out.println(userDao.findByUsername(user.getUsername()));
+        if(userDao.findByUsername(user.getUsername()) != null ){
+            validation.rejectValue("username",null, "Username is already in use");
+        }
+        if(validation.hasErrors()){
+            model.addAttribute("errors",validation);
+            return "users/signUp";
+        }
+
         String hash = passwordEncoder.encode(user.getPassword());
         user.setPassword(hash);
-        users.save(user);
+        userDao.save(user);
         return "redirect:/login";
+
     }
 }
