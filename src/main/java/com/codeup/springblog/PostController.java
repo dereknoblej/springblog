@@ -80,14 +80,14 @@ public class PostController {
         if(validation.hasErrors()){
             model.addAttribute("errors", validation);
             model.addAttribute("post", post);
-            return "posts/create";
+            return "/posts/create";
         }
 
        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthor(author);
         postsDao.save(post);
         emailService.prepareAndSend(post,post.getTitle(),post.getBody());
-        return "redirect:posts";
+        return "redirect:/posts";
 
     }
 
