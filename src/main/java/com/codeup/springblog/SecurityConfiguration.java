@@ -25,7 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(usersLoader) // How to find users by their username
+                .userDetailsService(usersLoader) // How to find users2 by their username
                 .passwordEncoder(passwordEncoder()) // How to encode and verify passwords
         ;
     }
@@ -51,8 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/posts/create", // only authenticated users can create ads
-                        "/posts/{id}/edit" // only authenticated users can edit ads
+                        "/posts/create", // only authenticated users2 can create ads
+                        "/posts/{id}/edit" // only authenticated users2 can edit ads
                 )
                 .authenticated()
         ;
