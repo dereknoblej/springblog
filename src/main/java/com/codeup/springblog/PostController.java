@@ -64,7 +64,7 @@ public class PostController {
         Post oldPost = postsDao.findOne(post.getId());
         post.setAuthor(oldPost.getAuthor());
         postsDao.save(post);
-        return "redirect:posts";
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts/create")
