@@ -12,13 +12,15 @@
 <h1>Create Post</h1>
 
 <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
-    <input type="text" th:field="*{title}" />
+    <label for="title">Title</label>
+    <input type="text" th:field="*{title}" id="title" />
     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
     <br />
-    <input type="text" th:field="*{body}" />
+    <label for="body">Body</label>
+    <input type="text" th:field="*{body}" id="body" />
     <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></p>
     <br />
-    <input type="submit" />
+    <input type="submit" class="btn btn-primary" />
 
 
 </form>
