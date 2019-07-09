@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "users2")
+@Table(name = "users")
 public class User {
 
     @Id @GeneratedValue @Column(columnDefinition = "int(11) unsigned")
