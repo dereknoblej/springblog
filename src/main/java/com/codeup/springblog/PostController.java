@@ -36,7 +36,7 @@ public class PostController {
     private String deletePost(@RequestParam(name="id") int id){
         System.out.println(id);
         postsDao.delete(id);
-        return "redirect:/posts";
+        return "redirect:posts";
 
     }
 
@@ -64,7 +64,7 @@ public class PostController {
         Post oldPost = postsDao.findOne(post.getId());
         post.setAuthor(oldPost.getAuthor());
         postsDao.save(post);
-        return "redirect:/posts";
+        return "redirect:posts";
     }
 
     @GetMapping("/posts/create")
@@ -80,14 +80,14 @@ public class PostController {
         if(validation.hasErrors()){
             model.addAttribute("errors", validation);
             model.addAttribute("post", post);
-            return "/posts/create";
+            return "posts/create";
         }
 
        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthor(author);
         postsDao.save(post);
         emailService.prepareAndSend(post,post.getTitle(),post.getBody());
-        return "redirect:/posts";
+        return "redirect:posts";
 
     }
 
