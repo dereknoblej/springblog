@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <title>editPost</title>
+    <div th:replace="partials :: header"></div>
+
 </head>
 <body>
+<div th:replace="partials :: navbar"></div>
+
 <h2>Edit the post</h2>
 
 <form th:action="@{'/posts/'+${post.id}+'/edit'}" th:method="post" th:object="${post}">
