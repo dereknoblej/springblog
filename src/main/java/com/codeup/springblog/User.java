@@ -13,7 +13,7 @@ public class User {
     @Id @GeneratedValue @Column(columnDefinition = "int(11) unsigned")
     private int id;
 
-    @NotBlank(message = "Must have username")
+    @NotBlank(message = "Must have username.")
     @Column(nullable = false)
     private String username;
 
