@@ -24,6 +24,14 @@
         <input type="hidden" name="idEdit" th:value="${post.id}" />
             <button type="submit" class="btn btn-primary">Edit</button>
         </form>
+        <form th:action="@{'/api/email'}" th:method="POST" th:object="${mailgun}">
+            <input th:field="*{from}" type="hidden" th:value="${post.author.username}" />
+            <input th:field="*{to}" type="hidden" value="derek.noblej@gmail.com" />
+            <input th:field="*{subject}" type="hidden" th:value="${post.title}"/>
+            <input th:field="*{text}" type="hidden" th:value="${post.body}" />
+            <input type="submit" value="Email" class="btn btn-primary" />
+
+        </form>
         <br/>
         <br/>
     </div>

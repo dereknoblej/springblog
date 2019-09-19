@@ -28,6 +28,7 @@ public class PostController {
     public String posts(Model model){
 
         model.addAttribute("postlist", postsDao.findAll());
+        model.addAttribute("mailgun", new Mailgun());
 
         return "posts/index";
     }

@@ -28,8 +28,6 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public String saveUser(@Valid User user, Errors validation, Model model){
-        System.out.println(user.getUsername());
-        System.out.println(userDao.findByUsername(user.getUsername()));
         if(userDao.findByUsername(user.getUsername()) != null ){
             validation.rejectValue("username",null, "Username is already in use");
         }
