@@ -5,7 +5,9 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 
 @RestController
@@ -16,15 +18,19 @@ public class MGSample {
     final static String DOMAIN_NAME = "mg.dnohomework.com";
 
     @PostMapping("email")
-    public static JsonNode sendSimpleMessage() throws UnirestException {
-
+    public static JsonNode sendSimpleMessage(@RequestParam(name = "from") String from, @RequestParam(name = "to") String to, @RequestParam(name = "subject") String subject, @RequestParam(name = "text") String text) throws UnirestException {
+        System.out.println(from);
+        System.out.println(to);
+        System.out.println(subject);
+        System.out.println(text);
         Mailgun mg = new Mailgun();
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/"+ DOMAIN_NAME +"/messages")
 			.basicAuth("api", API_KEY )
-                .queryString("from", "Excited User <USER@dnohomework.COM>")
+
+                .queryString("from",  from + " <USER@dnohomework.COM>")
                 .queryString("to", "derek.noblej@gmail.com")
-                .queryString("subject", "hello")
-                .queryString("text", "testing")
+                .queryString("subject", subject)
+                .queryString("text", text)
                 .asJson();
         return request.getBody();
     }
