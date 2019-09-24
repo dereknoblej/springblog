@@ -27,7 +27,7 @@ import java.util.List;
 public class CalendarQuickstart {
     private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
+    private static final String TOKENS_DIRECTORY_PATH = "";
 
     /**
      * Global instance of the scopes required by this quickstart.
