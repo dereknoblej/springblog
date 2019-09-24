@@ -26,11 +26,24 @@ public class PostController {
 
     @GetMapping("/posts")
     public String posts(Model model){
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = usersDao.findOne(author.getId());
 
+        if(!currentUser.isVerified()){
+            return "redirect:/verify";
+        }
         model.addAttribute("postlist", postsDao.findAll());
         model.addAttribute("mailgun", new Mailgun());
 
         return "posts/index";
+    }
+
+    @GetMapping("/verify")
+    public String verify(Model model){
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = usersDao.findOne(author.getId());
+        model.addAttribute("username", currentUser);
+        return "users/verfiy";
     }
 
     @PostMapping("/posts")
