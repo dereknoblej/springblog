@@ -46,10 +46,23 @@ public class PostController {
         return "users/verfiy";
     }
 
+//    @PostMapping("/posts")
+//    private String deletePost(@RequestParam(name="id") int id){
+//        System.out.println(id);
+//        postsDao.delete(id);
+//        return "redirect:posts";
+//
+//    }
+
     @PostMapping("/posts")
-    private String deletePost(@RequestParam(name="id") int id){
-        System.out.println(id);
-        postsDao.delete(id);
+    private String post(@RequestParam(name="verify") double verify){
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = usersDao.findOne(author.getId());
+        if(currentUser.getVerifyCode() == verify){
+            currentUser.setVerified(true);
+            usersDao.save(currentUser);
+        }
+
         return "redirect:posts";
 
     }
