@@ -24,6 +24,12 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column
+    private Double verifyCode;
+
+    @Column(columnDefinition = "Boolean default false")
+    private boolean isVerified;
+
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
 
@@ -36,6 +42,8 @@ public class User {
         this.password = copy.password;
         this.email = copy.email;
         this.posts = copy.posts;
+        this.isVerified = copy.isVerified;
+        this.verifyCode = copy.verifyCode;
     }
 
 
@@ -79,4 +87,19 @@ public class User {
         this.posts = posts;
     }
 
+    public Double getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(Double verifyCode) {
+        this.verifyCode = verifyCode;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
 }

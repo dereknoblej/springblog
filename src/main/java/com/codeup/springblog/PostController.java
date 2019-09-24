@@ -26,17 +26,43 @@ public class PostController {
 
     @GetMapping("/posts")
     public String posts(Model model){
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = usersDao.findOne(author.getId());
 
+        if(!currentUser.isVerified()){
+            return "redirect:/verify";
+        }
         model.addAttribute("postlist", postsDao.findAll());
         model.addAttribute("mailgun", new Mailgun());
 
         return "posts/index";
     }
 
+    @GetMapping("/verify")
+    public String verify(Model model){
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = usersDao.findOne(author.getId());
+        model.addAttribute("username", currentUser);
+        return "users/verfiy";
+    }
+
+//    @PostMapping("/posts")
+//    private String deletePost(@RequestParam(name="id") int id){
+//        System.out.println(id);
+//        postsDao.delete(id);
+//        return "redirect:posts";
+//
+//    }
+
     @PostMapping("/posts")
-    private String deletePost(@RequestParam(name="id") int id){
-        System.out.println(id);
-        postsDao.delete(id);
+    private String post(@RequestParam(name="verify") double verify){
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = usersDao.findOne(author.getId());
+        if(currentUser.getVerifyCode() == verify){
+            currentUser.setVerified(true);
+            usersDao.save(currentUser);
+        }
+
         return "redirect:posts";
 
     }
