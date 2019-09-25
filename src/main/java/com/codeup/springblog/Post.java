@@ -1,5 +1,6 @@
 package com.codeup.springblog;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -9,17 +10,21 @@ import javax.validation.constraints.Size;
 @Table(name = "Posts")
 public class Post {
     @Id @GeneratedValue @Column(columnDefinition = "int(11) unsigned")
+    @JsonManagedReference
     private int id;
 
     @NotBlank(message = "A post must have a title.")
     @Size(min = 3, message = "A title must be at least 3 characters long.")
     @Column(nullable = false)
+    @JsonManagedReference
     private String title;
 
     @NotBlank(message = "Post must have a body.")
     @Column(nullable = false)
+    @JsonManagedReference
     private String body;
     @ManyToOne
+    @JsonManagedReference
     private User author;
 
     public Post() {
