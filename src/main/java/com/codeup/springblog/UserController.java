@@ -41,14 +41,14 @@ public class UserController {
 
         double randomNum = Math.random() * 5000;
 
-        final String API_KEY = "";
+        final String API_KEY = "f7691beef0d3b9036652fe2a843d11fe-c50f4a19-fddf5401";
         final String DOMAIN_NAME = "mg.dnohomework.com";
 
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/"+ DOMAIN_NAME +"/messages")
                 .basicAuth("api", API_KEY )
 
                 .queryString("from",  user.getUsername() + " <USER@dnohomework.COM>")
-                .queryString("to", "derek.noblej@gmail.com")
+                .queryString("to", user.getEmail())
                 .queryString("subject", user.getEmail())
                 .queryString("text", randomNum)
                 .asJson();

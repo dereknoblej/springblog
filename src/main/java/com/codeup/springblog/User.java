@@ -1,6 +1,7 @@
 package com.codeup.springblog;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -11,26 +12,33 @@ import java.util.List;
 public class User {
 
     @Id @GeneratedValue @Column(columnDefinition = "int(11) unsigned")
+    @JsonManagedReference
     private int id;
 
     @NotBlank(message = "Must have username.")
+    @JsonManagedReference
     @Column(nullable = false)
     private String username;
 
     @NotBlank(message = "Must have password")
     @Column(nullable = false)
+    @JsonManagedReference
     private String password;
     @NotBlank(message = "Must have email")
     @Column(nullable = false)
+    @JsonManagedReference
     private String email;
 
     @Column
+    @JsonManagedReference
     private Double verifyCode;
 
     @Column(columnDefinition = "Boolean default false")
+    @JsonManagedReference
     private boolean isVerified;
 
     @OneToMany(mappedBy = "author")
+    @JsonManagedReference
     private List<Post> posts;
 
     public User() {
