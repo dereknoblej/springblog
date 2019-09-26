@@ -1,5 +1,6 @@
 package com.codeup.springblog;
 
+import com.google.api.client.util.Value;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -21,7 +22,14 @@ public class UserController {
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+
+
     }
+
+    @Value("${mailgun-key}")
+    private String mgkey;
+
+
 
     @GetMapping("/sign-up")
     public String showSignupForm(Model model){
@@ -41,11 +49,10 @@ public class UserController {
 
         double randomNum = Math.random() * 5000;
 
-        final String API_KEY = "f7691beef0d3b9036652fe2a843d11fe-c50f4a19-fddf5401";
         final String DOMAIN_NAME = "mg.dnohomework.com";
 
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/"+ DOMAIN_NAME +"/messages")
-                .basicAuth("api", API_KEY )
+                .basicAuth("api", mgkey )
 
                 .queryString("from",  user.getUsername() + " <USER@dnohomework.COM>")
                 .queryString("to", user.getEmail())

@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -67,7 +68,10 @@ public class PostController {
 
     }
 
-
+    @GetMapping("/posts.json")
+    public @ResponseBody List<Post> viewAllpostsInJSONFormat(){
+        return (List<Post>) postsDao.findAll();
+    }
 
     @GetMapping("/posts/{id}")
     public String individualPost(Model model){
