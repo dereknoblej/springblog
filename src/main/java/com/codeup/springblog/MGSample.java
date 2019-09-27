@@ -1,4 +1,5 @@
 package com.codeup.springblog;
+import com.google.api.client.util.Value;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -16,6 +17,9 @@ public class MGSample {
 
     final static String API_KEY = "";
     final static String DOMAIN_NAME = "mg.dnohomework.com";
+
+    @Value("${mailgun-key}")
+    private String mgkey;
 
     @PostMapping("email")
     public static JsonNode sendSimpleMessage(@RequestParam(name = "from") String from, @RequestParam(name = "to") String to, @RequestParam(name = "subject") String subject, @RequestParam(name = "text") String text) throws UnirestException {
