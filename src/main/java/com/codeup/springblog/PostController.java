@@ -86,7 +86,7 @@ public class PostController {
     public String editPost(@PathVariable int id, Model model){
         Post post = postsDao.findOne(id);
         System.out.println(post.getAuthor());
-        model.addAttribute("post", post);
+        model.addAtribute("post", post);
 
         return "posts/editPost";
     }
