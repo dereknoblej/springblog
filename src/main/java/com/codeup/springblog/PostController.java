@@ -73,6 +73,11 @@ public class PostController {
         return (List<Post>) postsDao.findAll();
     }
 
+    @GetMapping("/posts/ajax")
+    public String viewAllPostsWithAjax(){
+        return "posts/ajax";
+    }
+
     @GetMapping("/posts/{id}")
     public String individualPost(Model model){
         Post post = new Post("HelloWorld", "This is a basic post");
@@ -86,7 +91,7 @@ public class PostController {
     public String editPost(@PathVariable int id, Model model){
         Post post = postsDao.findOne(id);
         System.out.println(post.getAuthor());
-        model.addAtribute("post", post);
+        model.addAttribute("post", post);
 
         return "posts/editPost";
     }
