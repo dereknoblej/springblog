@@ -25,21 +25,45 @@
     });
 
      console.log(arrayPosts);
-function filterPosts(){
 
-    arrayPosts.forEach(function(posts, i) {
 
-        console.log(posts)
-        console.log(i);
 
+
+
+
+function filterPosts(arrayPosts){
+
+    console.log(arrayPosts)
+
+
+
+    arrayPosts.forEach(function(post) {
+        post.title.forEach(function (name) {
+            console.log(name.toString())
+        })
     });
 
 }
 
-filterPosts();
+filterPosts(arrayPosts);
 
 
 })(jQuery);
+
+//
+// const mainArr = () => {
+//     fetch("http://localhost:8080/p
+//
+//
+// const newArr = (data) => {
+//     data.map((arr1) => {
+//         console.log(arr1)
+//     })
+// }
+//
+// console.log(newArr(mainArr()))
+//
+//
 
 
 
