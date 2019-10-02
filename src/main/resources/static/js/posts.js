@@ -5,6 +5,7 @@
     var arrayPosts = [];
 
     var postsArray = $.ajax({'url': '/posts.json'});
+
      postsArray.done(function (posts) {
         var html = '';
 
@@ -15,37 +16,50 @@
             // html += '<p>Published by ' + post.author.username + '</p>';
             // html += '</div>';
 
-            arrayPosts.push({id:post.id, name:post.title, body:post.body, author:post.author.username},)
+            arrayPosts.push({id: post.id, name: post.title, body: post.body, author: post.author.username})
 
 
         });
+
+         var nameSearch = document.getElementById("search");
+
+         function filterPosts(arrayPosts){
+
+
+             var filteredPosts = [];
+
+
+             for(var i = 0; i <= arrayPosts.length; i++){
+
+                 if(arrayPosts[i].name.toUpperCase().indexOf(nameSearch.toUpperCase()) > -1){
+
+                     filteredPosts.push(arrayPosts[i])
+                 }
+
+             }
+
+             for(var n = 0; n <= filteredPosts.length; n++){
+
+                console.log(filteredPosts[n].name)
+             }
+
+
+         }
+
+         filterPosts(arrayPosts);
+
+
+         nameSearch.addEventListener("input",filterPosts);
+
+
+
+
+
         // $('#posts').html(html);
 
         return postsArray;
     });
 
-     console.log(arrayPosts);
-
-
-
-
-
-
-function filterPosts(arrayPosts){
-
-    console.log(arrayPosts)
-
-
-
-    arrayPosts.forEach(function(post) {
-        post.title.forEach(function (name) {
-            console.log(name.toString())
-        })
-    });
-
-}
-
-filterPosts(arrayPosts);
 
 
 })(jQuery);
@@ -65,7 +79,8 @@ filterPosts(arrayPosts);
 //
 //
 
-
-
-
-
+// const baseurl = "http://localhost:8080/posts.json"
+//
+// fetch(baseurl).then((response) => console.log(response.json()));
+//
+// console.log("Hello World")
